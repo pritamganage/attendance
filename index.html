@@ -372,7 +372,29 @@ function downloadAllPDF(){
         }
     });
 
-    doc.save("All_Staff_Attendance.pdf");
+    // doc.save("All_Staff_Attendance.pdf");
+     const pdfBlob = doc.output("blob");
+    const url = URL.createObjectURL(pdfBlob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${s.name}_attendance.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    }
+
+    const pdfBlob = doc.output("blob");
+    const url = URL.createObjectURL(pdfBlob);
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "All_Staff_Attendance.pdf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 // ================= RENDER =================
