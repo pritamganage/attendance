@@ -98,6 +98,28 @@
             color:white !important;
             z-index: 40;
         }
+        @media (max-width: 768px) {
+
+       .sticky-name {
+           min-width: 120px;
+           max-width: 120px;
+       }
+   
+       .sticky-salary {
+           min-width: 80px;
+           max-width: 80px;
+       }
+   
+       td, th {
+           font-size: 12px;
+           padding: 6px;
+       }
+   
+       .action-btn {
+           width: 60px;
+           font-size: 10px;
+       }
+}
     </style>
 </head>
 
@@ -119,33 +141,40 @@
             <input id="name" class="form-control" placeholder="Staff Name">
         </div>
 
-        <div class="col-md-2">
-            <input id="salary" class="form-control" type="number" value="700">
-        </div>
+        <div class="row g-2 mb-3">
 
-        <div class="col-md-2">
-            <input id="yearInput" class="form-control" placeholder="Year">
-        </div>
-
-        <div class="col-md-2">
-            <select id="monthSelect" class="form-select"></select>
-        </div>
-
-        <div class="col-md-3">
-            <input id="searchInput" class="form-control" placeholder="Search Staff Name..." oninput="render()">
-       </div>
-
-        <div class="col-md-3">
-            <button class="btn btn-primary w-100" onclick="addStaff()">Add Staff</button>
-        </div>
-
+    <div class="col-12 col-md-3">
+        <input id="name" class="form-control" placeholder="Staff Name">
     </div>
 
-    <div class="mb-2 text-end">
-        <button class="btn btn-dark btn-sm" onclick="showHistory()">Delete History</button>
-        <button class="btn btn-success btn-sm" onclick="downloadAllPDF()">All PDF</button>
-        <button class="btn btn-warning btn-sm" onclick="showDeleted()">Restore</button>
+    <div class="col-12 col-md-2">
+        <input id="salary" class="form-control" type="number" value="700">
     </div>
+
+    <div class="col-6 col-md-2">
+        <input id="yearInput" class="form-control" placeholder="Year">
+    </div>
+
+    <div class="col-6 col-md-2">
+        <select id="monthSelect" class="form-select"></select>
+    </div>
+
+    <div class="col-12 col-md-3">
+        <input id="searchInput" class="form-control" placeholder="Search Staff">
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary w-100" onclick="addStaff()">Add Staff</button>
+    </div>
+
+</div>
+    </div>
+
+   <div class="d-flex flex-wrap gap-2 mb-2 justify-content-center">
+    <button class="btn btn-dark btn-sm flex-fill" onclick="showHistory()">Delete History</button>
+    <button class="btn btn-success btn-sm flex-fill" onclick="downloadAllPDF()">All PDF</button>
+    <button class="btn btn-warning btn-sm flex-fill" onclick="showDeleted()">Restore</button>
+   </div>
 
     <div class="box">
         <table class="table table-bordered">
