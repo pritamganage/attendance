@@ -43,6 +43,58 @@
             font-size:11px;
             margin:2px;
         }
+
+        /* Scroll */
+        .box{
+            overflow-x:auto;
+            position: relative;
+        }
+
+        /* Common sticky */
+        .sticky{
+            position: sticky;
+            background: white !important;
+        }
+
+        /* SR */
+        .sticky-sr{
+            left: 0;
+            min-width: 60px;
+            max-width: 60px;
+            z-index: 20;
+        }
+
+        /* NAME */
+        .sticky-name{
+            left: 60px;
+            min-width: 160px;
+            max-width: 160px;
+            z-index: 20;
+        }
+
+        /* SALARY */
+        .sticky-salary{
+            left: 220px;
+            min-width: 100px;
+            max-width: 100px;
+            z-index: 20;
+        }
+
+        /* Header */
+        thead th{
+            position: sticky;
+            top: 0;
+            background:#212529 !important;
+            color:white;
+            z-index: 30;
+        }
+
+        /* Sticky header fix */
+        thead .sticky{
+            background:#212529 !important;
+            color:white !important;
+            z-index: 40;
+        }
     </style>
 </head>
 
@@ -71,6 +123,10 @@
         </div>
 
         <div class="col-md-3">
+            <input id="searchInput" class="form-control" placeholder="Search Staff Name..." oninput="render()">
+       </div>
+
+        <div class="col-md-3">
             <button class="btn btn-primary w-100" onclick="addStaff()">Add Staff</button>
         </div>
 
@@ -96,6 +152,8 @@
 // ================= DATA =================
 let staff = JSON.parse(localStorage.getItem("staff")) || [];
 let deletedHistory = JSON.parse(localStorage.getItem("deletedHistory")) || [];
+
+let searchText = "";
 
 // ================= MONTH =================
 const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -267,6 +325,7 @@ function downloadAllPDF(){
 
     staff.forEach((s,i)=>{
 
+
         let p=0,a=0;
         let rows=[];
 
@@ -310,10 +369,15 @@ function downloadAllPDF(){
 // ================= RENDER =================
 function render(){
 
-    let y=Number(yearInput.value);
-    let m=Number(monthSelect.value);
+     let y=Number(yearInput.value);
+     let m=Number(monthSelect.value);
 
-    let head=`<tr><th>SR</th><th>Name</th><th>Salary</th>`;
+    searchText = document.getElementById("searchInput")?.value?.toLowerCase() || "";
+
+    let head=`<tr>
+    <th class="sticky sticky-sr">SR</th>
+    <th class="sticky sticky-name">Name</th>
+    <th class="sticky sticky-salary">Salary</th>`;
 
     for(let d=1; d<=getDays(m,y); d++)
         head+=`<th>${d}</th>`;
@@ -324,39 +388,45 @@ function render(){
 
     let body="";
 
-    staff.forEach((s,i)=>{
+    let filteredStaff = staff.filter(s =>
+    s.name.toLowerCase().includes(searchText)
+    );
 
-        let p=0,a=0;
+  filteredStaff.forEach((s)=>{
 
-        let row=`<tr>
-        <td>${i+1}</td>
-        <td>${s.name}</td>
-        <td>${s.salary}</td>`;
+    let i = staff.indexOf(s);
 
-        for(let d=0; d<getDays(m,y); d++){
+    let p=0,a=0;
 
-            let val=s.attendance?.[y]?.[m]?.[d]||"A";
+    let row=`<tr>
+    <td class="sticky sticky-sr">${i+1}</td>
+    <td class="sticky sticky-name">${s.name}</td>
+    <td class="sticky sticky-salary">${s.salary}</td>`;
 
-            if(val==="P") p++; else a++;
+    for(let d=0; d<getDays(m,y); d++){
 
-            row+=`
-            <td class="${val==="P"?"present":"absent"}"
-            onclick="toggle(${i},${y},${m},${d})">${val}</td>`;
-        }
+        let val=s.attendance?.[y]?.[m]?.[d]||"A";
+
+        if(val==="P") p++; else a++;
 
         row+=`
-        <td>${p}</td>
-        <td>${a}</td>
-        <td>${p*s.salary}</td>
-        <td>
-            <button class="btn btn-warning action-btn" onclick="editSalary(${i})">Edit Salary</button>
-            <button class="btn btn-primary action-btn" onclick="downloadPDF(${i})">PDF</button>
-            <button class="btn btn-danger action-btn" onclick="removeStaff(${i})">Delete</button>
-        </td>
-        </tr>`;
+        <td class="${val==="P"?"present":"absent"}"
+        onclick="toggle(${i},${y},${m},${d})">${val}</td>`;
+    }
 
-        body+=row;
-    });
+    row+=`
+    <td>${p}</td>
+    <td>${a}</td>
+    <td>${p*s.salary}</td>
+    <td>
+        <button class="btn btn-warning action-btn" onclick="editSalary(${i})">Edit Salary</button>
+        <button class="btn btn-primary action-btn" onclick="downloadPDF(${i})">PDF</button>
+        <button class="btn btn-danger action-btn" onclick="removeStaff(${i})">Delete</button>
+    </td>
+    </tr>`;
+
+    body+=row;
+});
 
     tbody.innerHTML=body;
 }
