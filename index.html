@@ -371,8 +371,11 @@ let a = 0;
     });
 
     // 🔥 IMPORTANT FIX
-   const blob = doc.output("blob");
+      const blob = doc.output("blob");
     const url = URL.createObjectURL(blob);
+    
+    // 🔥 OPEN IN NEW TAB (GUARANTEED)
+    window.open(url, "_blank");
 
     const link = document.createElement("a");
     link.href = url;
@@ -444,6 +447,8 @@ function downloadAllPDF(){
 
     const blob = doc.output("blob");
     const url = URL.createObjectURL(blob);
+
+    window.open(url, "_blank");
 
     const a = document.createElement("a");
     a.href = url;
