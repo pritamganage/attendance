@@ -156,8 +156,11 @@
     </div>
 
     <div class="col-12 col-md-3">
-        <input id="searchInput" class="form-control" placeholder="Search Staff">
-    </div>
+        <input id="searchInput"
+        class="form-control"
+        placeholder="Search Staff"
+        oninput="render()"> 
+   </div>
 
     <div class="col-12">
         <button class="btn btn-primary w-100" onclick="addStaff()">Add Staff</button>
