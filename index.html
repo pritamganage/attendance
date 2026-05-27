@@ -324,32 +324,38 @@ function showDeleted(){
 // ================= SINGLE PDF =================
 function downloadPDF(i){
 
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-    let s=staff[i];
-    let y=Number(yearInput.value);
-    let m=Number(monthSelect.value);
+    let s = staff[i];
+    if(!s){
+    alert("Staff not found");
+    return;
+  }
 
-    let p=0,a=0;
+    let y = Number(document.getElementById("yearInput").value);
+    let m = Number(document.getElementById("monthSelect").value);
+
+ let p = 0;
+let a = 0; 
     let rows=[];
 
     const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
     for(let d=0; d<getDays(m,y); d++){
 
-        let val=s.attendance?.[y]?.[m]?.[d]||"A";
+        let val = s.attendance?.[y]?.[m]?.[d] || "A";
 
         if(val==="P") p++; else a++;
 
-        let dateObj=new Date(y,m,d);
+        let dateObj = new Date(y,m,d);
 
         rows.push([
             dateObj.toLocaleDateString("en-GB"),
             dayNames[dateObj.getDay()],
             val,
             s.salary,
-            val==="P"?s.salary:0
+            val==="P" ? s.salary : 0
         ]);
     }
 
@@ -364,42 +370,56 @@ function downloadPDF(i){
         body:rows
     });
 
-    doc.save(`${s.name}_attendance.pdf`);
+    // 🔥 IMPORTANT FIX
+    const blob = doc.output("blob");
+    const url = URL.createObjectURL(blob);
+
+    let countA = 0;   // if you need attendance count
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${s.name}_attendance.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    
+    setTimeout(()=>{
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 1000);
 }
 
 // ================= ALL STAFF PDF =================
 function downloadAllPDF(){
 
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
     let y = Number(document.getElementById("yearInput").value);
     let m = Number(document.getElementById("monthSelect").value);
 
     const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-    let yPos=15;
+    let yPos = 15;
 
     staff.forEach((s,i)=>{
-
 
         let p=0,a=0;
         let rows=[];
 
         for(let d=0; d<getDays(m,y); d++){
 
-            let val=s.attendance?.[y]?.[m]?.[d]||"A";
+            let val = s.attendance?.[y]?.[m]?.[d] || "A";
 
             if(val==="P") p++; else a++;
 
-            let dateObj=new Date(y,m,d);
+            let dateObj = new Date(y,m,d);
 
             rows.push([
                 dateObj.toLocaleDateString("en-GB"),
                 dayNames[dateObj.getDay()],
                 val,
                 s.salary,
-                val==="P"?s.salary:0
+                val==="P" ? s.salary : 0
             ]);
         }
 
@@ -412,26 +432,27 @@ function downloadAllPDF(){
             body:rows
         });
 
-        yPos=doc.lastAutoTable.finalY+10;
+        yPos = doc.lastAutoTable.finalY + 10;
 
-        if(yPos>260){
+        if(yPos > 260){
             doc.addPage();
-            yPos=15;
+            yPos = 15;
         }
     });
 
-    // doc.save("All_Staff_Attendance.pdf");
+    const blob = doc.output("blob");
+    const url = URL.createObjectURL(blob);
 
-    const pdfBlob = doc.output("blob");
-    const url = URL.createObjectURL(pdfBlob);
-    
     const a = document.createElement("a");
     a.href = url;
     a.download = "All_Staff_Attendance.pdf";
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+
+    setTimeout(()=>{
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 1000);
 }
 
 // ================= RENDER =================
