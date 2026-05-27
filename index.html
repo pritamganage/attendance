@@ -14,7 +14,10 @@
     <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.31/dist/jspdf.plugin.autotable.min.js"></script>
 
     <style>
-        body { background:#f4f7fb; padding:20px; }
+        body { 
+             background:#f4f7fb; 
+             padding:5px;
+    }
 
         td,th{
             text-align:center;
@@ -59,29 +62,31 @@
             background: white !important;
         }
 
-        /* SR */
-        .sticky-sr{
-            left: 0;
-            min-width: 60px;
-            max-width: 60px;
-            z-index: 20;
-        }
+      /* SR */
+    .sticky-sr{
+        left: 0;
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+        z-index: 20;
+    }
+    
+   .sticky-name{
+    left: 50px;
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    z-index: 20;
+}
 
-        /* NAME */
-        .sticky-name{
-            left: 60px;
-            min-width: 160px;
-            max-width: 160px;
-            z-index: 20;
-        }
+.sticky-salary{
+    left: 210px;
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+    z-index: 20;
+}
 
-        /* SALARY */
-        .sticky-salary{
-            left: 220px;
-            min-width: 100px;
-            max-width: 100px;
-            z-index: 20;
-        }
 
         /* Header */
         thead th{
@@ -100,20 +105,35 @@
         }
         @media (max-width: 768px) {
 
-       .sticky-name {
-           min-width: 120px;
-           max-width: 120px;
-       }
-   
-       .sticky-salary {
-           min-width: 80px;
-           max-width: 80px;
-       }
-   
-       td, th {
-           font-size: 12px;
-           padding: 6px;
-       }
+       .sticky-sr{
+    width: 45px;
+    min-width: 45px;
+    max-width: 45px;
+    left: 0;
+}
+
+.sticky-name{
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    left: 45px;
+}
+
+.sticky-salary{
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+    left: 165px;
+}
+
+table{
+    border-collapse: collapse !important;
+}
+
+thead th,
+tbody td{
+    padding: 10px !important;
+}
    
        .action-btn {
            width: 60px;
@@ -127,17 +147,17 @@
 
 <div class="container-fluid">
 
-<h1 class="text-center text-primary mb-3 d-flex justify-content-center align-items-center gap-2">
+<h1 class="text-center p-0 m-0">
 
     <img src="ChatGPT Image May 26, 2026, 10_57_50 AM.png"
     width="400"
     height="400"
-    style="border-radius:12px;">
+    style="border-radius:12px; display:block; margin:auto;">
 </h1>
 
     <div class="row g-2 mb-3">
 
-        <div class="row g-2 mb-3">
+    <div class="row g-2 mt-0 mb-3">
 
     <div class="col-12 col-md-3">
         <input id="name" class="form-control" placeholder="Staff Name">
