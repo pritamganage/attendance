@@ -62,30 +62,30 @@
             background: white !important;
         }
 
-      /* SR */
-    .sticky-sr{
-        left: 0;
-        width: 50px;
-        min-width: 50px;
-        max-width: 50px;
+          /* SR */
+        .sticky-sr{
+            left: 0;
+            width: 50px;
+            min-width: 50px;
+            max-width: 50px;
+            z-index: 20;
+        }
+
+       .sticky-name{
+        left: 50px;
+        width: 160px;
+        min-width: 160px;
+        max-width: 160px;
         z-index: 20;
     }
-    
-   .sticky-name{
-    left: 50px;
-    width: 160px;
-    min-width: 160px;
-    max-width: 160px;
-    z-index: 20;
-}
 
-.sticky-salary{
-    left: 210px;
-    width: 70px;
-    min-width: 70px;
-    max-width: 70px;
-    z-index: 20;
-}
+        .sticky-salary{
+            left: 210px;
+            width: 70px;
+            min-width: 70px;
+            max-width: 70px;
+            z-index: 20;
+        }
 
 
         /* Header */
@@ -105,35 +105,35 @@
         }
         @media (max-width: 768px) {
 
-       .sticky-sr{
-    width: 45px;
-    min-width: 45px;
-    max-width: 45px;
-    left: 0;
-}
+           .sticky-sr{
+        width: 45px;
+        min-width: 45px;
+        max-width: 45px;
+        left: 0;
+    }
 
-.sticky-name{
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-    left: 45px;
-}
-
-.sticky-salary{
-    width: 50px;
-    min-width: 50px;
-    max-width: 50px;
-    left: 165px;
-}
-
-table{
-    border-collapse: collapse !important;
-}
-
-thead th,
-tbody td{
-    padding: 10px !important;
-}
+    .sticky-name{
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+        left: 45px;
+    }
+    
+    .sticky-salary{
+        width: 50px;
+        min-width: 50px;
+        max-width: 50px;
+        left: 165px;
+    }
+    
+    table{
+        border-collapse: collapse !important;
+    }
+    
+    thead th,
+    tbody td{
+        padding: 10px !important;
+    }
    
        .action-btn {
            width: 60px;
@@ -373,8 +373,8 @@ function downloadAllPDF(){
     const {jsPDF}=window.jspdf;
     const doc=new jsPDF();
 
-    let y=Number(yearInput.value);
-    let m=Number(monthSelect.value);
+    let y = Number(document.getElementById("yearInput").value);
+    let m = Number(document.getElementById("monthSelect").value);
 
     const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
