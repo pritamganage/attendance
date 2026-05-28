@@ -337,7 +337,7 @@ function downloadPDF(i){
     let m = Number(document.getElementById("monthSelect").value);
 
  let p = 0;
-let a = 0; 
+ let a = 0; 
     let rows=[];
 
     const dayNames=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -348,7 +348,7 @@ let a = 0;
 
         if(val==="P") p++; else a++;
 
-        let dateObj = new Date(y,m,d);
+        let dateObj = new Date(y,m,d+1);
 
         rows.push([
             dateObj.toLocaleDateString("en-GB"),
@@ -413,20 +413,20 @@ function downloadAllPDF(){
 
         for(let d=0; d<getDays(m,y); d++){
 
-            let val = s.attendance?.[y]?.[m]?.[d] || "A";
+    let val = s.attendance?.[y]?.[m]?.[d] || "A";
 
-            if(val==="P") p++; else a++;
+    if(val==="P") p++; else a++;
 
-            let dateObj = new Date(y,m,d);
+    let dateObj = new Date(y,m,d+1);
 
-            rows.push([
-                dateObj.toLocaleDateString("en-GB"),
-                dayNames[dateObj.getDay()],
-                val,
-                s.salary,
-                val==="P" ? s.salary : 0
-            ]);
-        }
+    rows.push([
+        dateObj.toLocaleDateString("en-GB"),
+        dayNames[dateObj.getDay()],
+        val,
+        s.salary,
+        val==="P" ? s.salary : 0
+    ]);
+}
 
         doc.text(`${i+1}. ${s.name} | ₹${s.salary}`,10,yPos);
         doc.text(`P:${p} A:${a} Total:${p*s.salary}`,10,yPos+6);
